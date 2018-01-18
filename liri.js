@@ -46,9 +46,9 @@ for (var i = 3; i < nodeArgs.length; i++) {
   }
 }
 
-if (processThree == "") {
+if (!queryName) {
 	
-	queryName = "Mr.Nobody"
+	queryName = "Mr. Nobody"
 	
 }
 
@@ -101,7 +101,7 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
 
 
-function requestSpotify() {
+function requestSpotify(song) {
 
 
 for (var i = 3; i < nodeArgs.length; i++) {
@@ -119,13 +119,19 @@ for (var i = 3; i < nodeArgs.length; i++) {
   }
 }
 
+if (processTwo == "do-what-it-says") {
+	queryName = song
+}
+
 
  
-if (processThree == "") {
+if (!queryName) {
 
-	queryName = "The+Sign"
+	queryName = "The Sign Ace of Base"
+	//console.log(queryName)
 
 } 
+
 
 	spotify.search({ type: 'track', query: queryName }, function(err, data) {
 if (err) {
@@ -142,14 +148,17 @@ let outputAlbName = JSON.stringify(data.tracks.items[0].album.name, null, 4);
 
 let outputPrev = JSON.stringify(data.tracks.items[0].album.external_urls.spotify, null, 4);
 
+let outputSongName = JSON.stringify(data.tracks.items[0].name)
+
 //let outputArtName = JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 4);
 
 //let outputArtName = JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 4);
 
 console.log("Artist: " + outputArtName)
 console.log("Album: " + outputAlbName)
-console.log("Song: " + processThree)
+console.log("Song: " + outputSongName)
 console.log("Preview Link: " + outputPrev)
+//console.log()
 //console.log("Artist: "outputArtName)
 });
 
@@ -172,12 +181,12 @@ fs.readFile("random.txt", "utf8", function(error, data) {
   var dataArr = data.split(",");
 
 
-  var processTwo = dataArr[0]
+  var textCommand = dataArr[0]
 
-  //var processThree = dataArr[1]
-  console.log(processTwo)
+  var textSong = dataArr[1]
+  //console.log(textSong)
 
-  //requestSpotify()
+  requestSpotify(textSong)
 
 
 });
